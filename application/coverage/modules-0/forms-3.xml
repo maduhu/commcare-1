@@ -1,0 +1,41 @@
+<h:html xmlns:h="http://www.w3.org/1999/xhtml" xmlns:orx="http://openrosa.org/jr/xforms" xmlns="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://openrosa.org/javarosa">
+	<h:head>
+		<h:title>Other</h:title>
+		<model>
+			<instance>
+				<data xmlns:jrm="http://dev.commcarehq.org/jr/xforms" xmlns="http://openrosa.org/formdesigner/EB055EF1-12A9-4409-B0B7-11EF5E9F2F6A" uiVersion="1" version="179" name="Other">
+					<question1/>
+					<geopoint/>
+					<empty_gp/>
+				<orx:meta xmlns:cc="http://commcarehq.org/xforms"><orx:deviceID/><orx:timeStart/><orx:timeEnd/><orx:username/><orx:userID/><orx:instanceID/><cc:appVersion/></orx:meta></data>
+			</instance>
+			<instance src="jr://instance/session" id="commcaresession"/><bind nodeset="/data/question1"/>
+			<bind nodeset="/data/geopoint" type="geopoint"/>
+			<bind nodeset="/data/empty_gp" relevant="/data/geopoint = ''"/>
+			<itext>
+				<translation lang="en" default="">
+					<text id="question1-label">
+						<value>This form covers some specific problems which have occurred in the past</value>
+					</text>
+					<text id="geopoint-label">
+						<value>If this question is empty, you should see a followup</value>
+					</text>
+					<text id="empty_gp-label">
+						<value>You should only see this if you skipped the previous question</value>
+					</text>
+				</translation>
+			</itext>
+		<setvalue ref="/data/meta/deviceID" event="xforms-ready" value="instance('commcaresession')/session/context/deviceid"/><setvalue ref="/data/meta/timeStart" event="xforms-ready" value="now()"/><bind nodeset="/data/meta/timeStart" type="xsd:dateTime"/><setvalue ref="/data/meta/timeEnd" event="xforms-revalidate" value="now()"/><bind nodeset="/data/meta/timeEnd" type="xsd:dateTime"/><setvalue ref="/data/meta/username" event="xforms-ready" value="instance('commcaresession')/session/context/username"/><setvalue ref="/data/meta/userID" event="xforms-ready" value="instance('commcaresession')/session/context/userid"/><setvalue ref="/data/meta/instanceID" event="xforms-ready" value="uuid()"/><setvalue ref="/data/meta/appVersion" event="xforms-ready" value="instance('commcaresession')/session/context/appversion"/></model>
+	</h:head>
+	<h:body>
+		<trigger ref="/data/question1">
+			<label ref="jr:itext('question1-label')"/>
+		</trigger>
+		<input ref="/data/geopoint">
+			<label ref="jr:itext('geopoint-label')"/>
+		</input>
+		<trigger ref="/data/empty_gp">
+			<label ref="jr:itext('empty_gp-label')"/>
+		</trigger>
+	</h:body>
+</h:html>

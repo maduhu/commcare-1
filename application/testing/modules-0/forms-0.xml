@@ -1,0 +1,119 @@
+<h:html xmlns:h="http://www.w3.org/1999/xhtml" xmlns:orx="http://openrosa.org/jr/xforms" xmlns="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://openrosa.org/javarosa">
+	<h:head>
+		<h:title>Registration</h:title>
+		<model>
+			<instance>
+				<data xmlns:jrm="http://dev.commcarehq.org/jr/xforms" xmlns="http://openrosa.org/formdesigner/43629EFA-9A4C-4BA5-844D-3D2A3739A279" uiVersion="1" version="51" name="Registration">
+					<name/>
+					<age/>
+					<is_pregnant/>
+					<edd/>
+					<question15/>
+					<mother_pic/>
+					<house_picture/>
+					<motherRecording/>
+					<childRecording/>
+					<audioTest1/>
+					<audioTest2/>
+				<case xmlns="http://commcarehq.org/case/transaction/v2" case_id="" user_id="" date_modified=""><create><case_name/><owner_id/><case_type>mother</case_type></create><update><phone/><edd/></update></case><orx:meta xmlns:cc="http://commcarehq.org/xforms"><orx:deviceID/><orx:timeStart/><orx:timeEnd/><orx:username/><orx:userID/><orx:instanceID/><cc:appVersion/></orx:meta></data>
+			</instance>
+			<instance src="jr://instance/session" id="commcaresession"/><bind nodeset="/data/name" type="xsd:string" required="true()"/>
+			<bind nodeset="/data/age" type="xsd:int"/>
+			<bind nodeset="/data/is_pregnant"/>
+			<bind nodeset="/data/edd" type="xsd:date" constraint=". &gt; today()" relevant="/data/is_pregnant = 'yes'"/>
+			<bind nodeset="/data/question15" type="xsd:string"/>
+			<bind nodeset="/data/mother_pic" type="binary"/>
+			<bind nodeset="/data/house_picture" type="binary"/>
+			<bind nodeset="/data/motherRecording" type="binary"/>
+			<bind nodeset="/data/childRecording" type="binary"/>
+			<bind nodeset="/data/audioTest1" type="binary"/>
+			<bind nodeset="/data/audioTest2" type="binary"/>
+			<itext>
+				<translation lang="en" default="">
+					<text id="name-label">
+						<value>Name of the Mother</value>
+					</text>
+					<text id="age-label">
+						<value>Age</value>
+					</text>
+					<text id="is_pregnant-label">
+						<value>Is Pregnant</value>
+					</text>
+					<text id="is_pregnant-yes-label">
+						<value>Yes</value>
+					</text>
+					<text id="is_pregnant-no-label">
+						<value>No</value>
+					</text>
+					<text id="edd-label">
+						<value>Estimated Delivery Date</value>
+					</text>
+					<text id="question15-label">
+						<value>Phone Number</value>
+					</text>
+					<text id="mother_pic-label">
+						<value>Picture of Mother</value>
+					</text>
+					<text id="house_picture-label">
+						<value>Picture of House</value>
+					</text>
+					<text id="motherRecording-label">
+						<value>Recording of Mother</value>
+					</text>
+					<text id="childRecording-label">
+						<value>Recording of Child</value>
+					</text>
+					<text id="audioTest1-label">
+						<value>Audio Test 1</value>
+					</text>
+					<text id="audioTest2-label">
+						<value>Audio Test 2</value>
+					</text>
+				</translation>
+			</itext>
+		<bind nodeset="/data/case/@date_modified" type="dateTime" calculate="/data/meta/timeEnd"/><bind nodeset="/data/case/@user_id" calculate="/data/meta/userID"/><bind nodeset="/data/case" relevant="/data/is_pregnant = 'yes'"/><setvalue ref="/data/case/@case_id" event="xforms-ready" value="uuid()"/><bind nodeset="/data/case/create/case_name" calculate="/data/name"/><bind nodeset="/data/case/create/owner_id" calculate="/data/meta/userID"/><bind nodeset="/data/case/update/phone" relevant="count(/data/question15) &gt; 0" calculate="/data/question15"/><bind nodeset="/data/case/update/edd" relevant="count(/data/edd) &gt; 0" calculate="/data/edd"/><setvalue ref="/data/meta/deviceID" event="xforms-ready" value="instance('commcaresession')/session/context/deviceid"/><setvalue ref="/data/meta/timeStart" event="xforms-ready" value="now()"/><bind nodeset="/data/meta/timeStart" type="xsd:dateTime"/><setvalue ref="/data/meta/timeEnd" event="xforms-revalidate" value="now()"/><bind nodeset="/data/meta/timeEnd" type="xsd:dateTime"/><setvalue ref="/data/meta/username" event="xforms-ready" value="instance('commcaresession')/session/context/username"/><setvalue ref="/data/meta/userID" event="xforms-ready" value="instance('commcaresession')/session/context/userid"/><setvalue ref="/data/meta/instanceID" event="xforms-ready" value="uuid()"/><setvalue ref="/data/meta/appVersion" event="xforms-ready" value="instance('commcaresession')/session/context/appversion"/></model>
+	</h:head>
+	<h:body>
+		<input ref="/data/name">
+			<label ref="jr:itext('name-label')"/>
+		</input>
+		<input ref="/data/age">
+			<label ref="jr:itext('age-label')"/>
+		</input>
+		<select1 ref="/data/is_pregnant">
+			<label ref="jr:itext('is_pregnant-label')"/>
+			<item>
+				<label ref="jr:itext('is_pregnant-yes-label')"/>
+				<value>yes</value>
+			</item>
+			<item>
+				<label ref="jr:itext('is_pregnant-no-label')"/>
+				<value>no</value>
+			</item>
+		</select1>
+		<input ref="/data/edd">
+			<label ref="jr:itext('edd-label')"/>
+		</input>
+		<input ref="/data/question15">
+			<label ref="jr:itext('question15-label')"/>
+		</input>
+		<upload ref="/data/mother_pic" mediatype="image/*">
+			<label ref="jr:itext('mother_pic-label')"/>
+		</upload>
+		<upload ref="/data/house_picture" mediatype="image/*" appearance="acquire">
+			<label ref="jr:itext('house_picture-label')"/>
+		</upload>
+		<upload ref="/data/motherRecording" mediatype="audio/*">
+			<label ref="jr:itext('motherRecording-label')"/>
+		</upload>
+		<upload ref="/data/childRecording" mediatype="audio/*" appearance="acquire">
+			<label ref="jr:itext('childRecording-label')"/>
+		</upload>
+		<upload ref="/data/audioTest1" mediatype="video/*">
+			<label ref="jr:itext('audioTest1-label')"/>
+		</upload>
+		<upload ref="/data/audioTest2" mediatype="video/*" appearance="acquire">
+			<label ref="jr:itext('audioTest2-label')"/>
+		</upload>
+	</h:body>
+</h:html>

@@ -1,0 +1,55 @@
+<h:html xmlns:h="http://www.w3.org/1999/xhtml" xmlns:orx="http://openrosa.org/jr/xforms" xmlns="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://openrosa.org/javarosa">
+	<h:head>
+		<h:title>Case Create</h:title>
+		<model>
+			<instance>
+				<data xmlns:jrm="http://dev.commcarehq.org/jr/xforms" xmlns="http://openrosa.org/formdesigner/C59FC6EE-2AD7-4DD5-892A-72DED4338CDE" uiVersion="1" version="179" name="Case Create">
+					<question2/>
+					<casename/>
+					<confirm/>
+				<case xmlns="http://commcarehq.org/case/transaction/v2" case_id="" user_id="" date_modified=""><create><case_name/><owner_id/><case_type>coverage_basic</case_type></create></case><orx:meta xmlns:cc="http://commcarehq.org/xforms"><orx:deviceID/><orx:timeStart/><orx:timeEnd/><orx:username/><orx:userID/><orx:instanceID/><cc:appVersion/></orx:meta></data>
+			</instance>
+			<instance src="jr://instance/session" id="commcaresession"/><instance src="jr://fixture/user-groups" id="groups"/><bind nodeset="/data/question2"/>
+			<bind nodeset="/data/casename" type="xsd:string" required="true()"/>
+			<bind nodeset="/data/confirm" required="true()"/>
+			<itext>
+				<translation lang="en" default="">
+					<text id="question2-label">
+						<value>This form tests creating a case</value>
+					</text>
+					<text id="casename-label">
+						<value>What is the case name? (This question should not be allowed to be empty)</value>
+					</text>
+					<text id="confirm-label">
+						<value>Please confirm you want to create this case by selecting "Confirm"</value>
+					</text>
+					<text id="confirm-confirm-label">
+						<value>Confirm - Create Case</value>
+					</text>
+					<text id="confirm-create-label">
+						<value>Cancel - Do Not</value>
+					</text>
+				</translation>
+			</itext>
+		<bind nodeset="/data/case/@date_modified" type="dateTime" calculate="/data/meta/timeEnd"/><bind nodeset="/data/case/@user_id" calculate="/data/meta/userID"/><bind nodeset="/data/case" relevant="/data/confirm = 'confirm'"/><setvalue ref="/data/case/@case_id" event="xforms-ready" value="uuid()"/><bind nodeset="/data/case/create/case_name" calculate="/data/casename"/><setvalue ref="/data/case/create/owner_id" event="xforms-ready" value="instance('groups')/groups/group/@id"/><setvalue ref="/data/meta/deviceID" event="xforms-ready" value="instance('commcaresession')/session/context/deviceid"/><setvalue ref="/data/meta/timeStart" event="xforms-ready" value="now()"/><bind nodeset="/data/meta/timeStart" type="xsd:dateTime"/><setvalue ref="/data/meta/timeEnd" event="xforms-revalidate" value="now()"/><bind nodeset="/data/meta/timeEnd" type="xsd:dateTime"/><setvalue ref="/data/meta/username" event="xforms-ready" value="instance('commcaresession')/session/context/username"/><setvalue ref="/data/meta/userID" event="xforms-ready" value="instance('commcaresession')/session/context/userid"/><setvalue ref="/data/meta/instanceID" event="xforms-ready" value="uuid()"/><setvalue ref="/data/meta/appVersion" event="xforms-ready" value="instance('commcaresession')/session/context/appversion"/></model>
+	</h:head>
+	<h:body>
+		<trigger ref="/data/question2">
+			<label ref="jr:itext('question2-label')"/>
+		</trigger>
+		<input ref="/data/casename">
+			<label ref="jr:itext('casename-label')"/>
+		</input>
+		<select1 ref="/data/confirm">
+			<label ref="jr:itext('confirm-label')"/>
+			<item>
+				<label ref="jr:itext('confirm-confirm-label')"/>
+				<value>confirm</value>
+			</item>
+			<item>
+				<label ref="jr:itext('confirm-create-label')"/>
+				<value>create</value>
+			</item>
+		</select1>
+	</h:body>
+</h:html>

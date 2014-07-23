@@ -1,0 +1,130 @@
+<h:html xmlns:h="http://www.w3.org/1999/xhtml" xmlns:orx="http://openrosa.org/jr/xforms" xmlns="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://openrosa.org/javarosa">
+	<h:head>
+		<h:title>Follow Up</h:title>
+		<model>
+			<instance>
+				<data xmlns:jrm="http://dev.commcarehq.org/jr/xforms" xmlns="http://openrosa.org/formdesigner/7025A77C-A9B1-4902-BC70-0140382EBD8E" uiVersion="1" version="51" name="Follow Up">
+					<past_tetanus/>
+					<tetanus_group>
+						<tetanus_1/>
+						<tetanus_2/>
+					</tetanus_group>
+					<update_edd/>
+					<new_edd/>
+					<prev_edd/>
+					<prev_past_tetanus/>
+					<prev_tetanus_1/>
+					<prev_tetanus_2/>
+				<case xmlns="http://commcarehq.org/case/transaction/v2" case_id="" user_id="" date_modified=""><update><tetanus_2/><past_tetanus/><edd/><tetanus_1/></update></case><orx:meta xmlns:cc="http://commcarehq.org/xforms"><orx:deviceID/><orx:timeStart/><orx:timeEnd/><orx:username/><orx:userID/><orx:instanceID/><cc:appVersion/></orx:meta></data>
+			</instance>
+			<instance src="jr://instance/session" id="commcaresession"/><instance src="jr://instance/casedb" id="casedb"/><bind nodeset="/data/past_tetanus" relevant="/data/prev_past_tetanus = ''"/>
+			<bind nodeset="/data/tetanus_group" relevant="/data/past_tetanus = 'no' or /data/prev_past_tetanus = 'no'"/>
+			<bind nodeset="/data/tetanus_group/tetanus_1" relevant="/data/prev_tetanus_1 = 'no' or /data/prev_tetanus_1 = ''"/>
+			<bind nodeset="/data/tetanus_group/tetanus_2" relevant="(/data/tetanus_1 = &quot;yes&quot; or /data/prev_tetanus_1 = &quot;yes&quot;) and (/data/prev_tetanus_2 = &quot;&quot; or /data/prev_tetanus_2 = &quot;no&quot;)"/>
+			<bind nodeset="/data/update_edd"/>
+			<bind nodeset="/data/new_edd" type="xsd:date" constraint=". &gt; today()" relevant="/data/update_edd = 'yes'"/>
+			<bind nodeset="/data/prev_edd"/>
+			<bind nodeset="/data/prev_past_tetanus"/>
+			<bind nodeset="/data/prev_tetanus_1"/>
+			<bind nodeset="/data/prev_tetanus_2"/>
+			<itext>
+				<translation lang="en" default="">
+					<text id="past_tetanus-label">
+						<value>Past Tetanus Vaccination?</value>
+					</text>
+					<text id="past_tetanus-yes-label">
+						<value>Yes</value>
+					</text>
+					<text id="past_tetanus-no-label">
+						<value>No</value>
+					</text>
+					<text id="tetanus_group-label">
+						<value>Tetanus Questions</value>
+					</text>
+					<text id="tetanus_1-label">
+						<value>Had Tetanus 1?</value>
+					</text>
+					<text id="tetanus_1-yes-label">
+						<value>Yes</value>
+					</text>
+					<text id="tetanus_1-no-label">
+						<value>No</value>
+					</text>
+					<text id="tetanus_2-label">
+						<value>Had Tetanus 2?</value>
+					</text>
+					<text id="tetanus_2-yes-label">
+						<value>Yes</value>
+					</text>
+					<text id="tetanus_2-no-label">
+						<value>No</value>
+					</text>
+					<text id="update_edd-label">
+						<value>EDD is <output ref="/data/prev_edd"/>.   Change the EDD?</value>
+					</text>
+					<text id="update_edd-yes-label">
+						<value>Yes</value>
+					</text>
+					<text id="update_edd-no-label">
+						<value>No</value>
+					</text>
+					<text id="new_edd-label">
+						<value>New EDD</value>
+					</text>
+				</translation>
+			</itext>
+		<bind nodeset="/data/case/@date_modified" type="dateTime" calculate="/data/meta/timeEnd"/><bind nodeset="/data/case/@user_id" calculate="/data/meta/userID"/><bind nodeset="/data/case/@case_id" calculate="instance('commcaresession')/session/data/case_id"/><bind nodeset="/data/case/update/tetanus_2" relevant="count(/data/tetanus_group/tetanus_2) &gt; 0" calculate="/data/tetanus_group/tetanus_2"/><bind nodeset="/data/case/update/past_tetanus" relevant="count(/data/past_tetanus) &gt; 0" calculate="/data/past_tetanus"/><bind nodeset="/data/case/update/edd" relevant="count(/data/new_edd) &gt; 0" calculate="/data/new_edd"/><bind nodeset="/data/case/update/tetanus_1" relevant="count(/data/tetanus_group/tetanus_1) &gt; 0" calculate="/data/tetanus_group/tetanus_1"/><setvalue ref="/data/prev_tetanus_2" event="xforms-ready" value="instance('casedb')/casedb/case[@case_id=instance('commcaresession')/session/data/case_id]/tetanus_2"/><setvalue ref="/data/prev_tetanus_1" event="xforms-ready" value="instance('casedb')/casedb/case[@case_id=instance('commcaresession')/session/data/case_id]/tetanus_1"/><setvalue ref="/data/prev_past_tetanus" event="xforms-ready" value="instance('casedb')/casedb/case[@case_id=instance('commcaresession')/session/data/case_id]/past_tetanus"/><setvalue ref="/data/prev_edd" event="xforms-ready" value="instance('casedb')/casedb/case[@case_id=instance('commcaresession')/session/data/case_id]/edd"/><setvalue ref="/data/meta/deviceID" event="xforms-ready" value="instance('commcaresession')/session/context/deviceid"/><setvalue ref="/data/meta/timeStart" event="xforms-ready" value="now()"/><bind nodeset="/data/meta/timeStart" type="xsd:dateTime"/><setvalue ref="/data/meta/timeEnd" event="xforms-revalidate" value="now()"/><bind nodeset="/data/meta/timeEnd" type="xsd:dateTime"/><setvalue ref="/data/meta/username" event="xforms-ready" value="instance('commcaresession')/session/context/username"/><setvalue ref="/data/meta/userID" event="xforms-ready" value="instance('commcaresession')/session/context/userid"/><setvalue ref="/data/meta/instanceID" event="xforms-ready" value="uuid()"/><setvalue ref="/data/meta/appVersion" event="xforms-ready" value="instance('commcaresession')/session/context/appversion"/></model>
+	</h:head>
+	<h:body>
+		<select1 ref="/data/past_tetanus">
+			<label ref="jr:itext('past_tetanus-label')"/>
+			<item>
+				<label ref="jr:itext('past_tetanus-yes-label')"/>
+				<value>yes</value>
+			</item>
+			<item>
+				<label ref="jr:itext('past_tetanus-no-label')"/>
+				<value>no</value>
+			</item>
+		</select1>
+		<group ref="/data/tetanus_group">
+			<label ref="jr:itext('tetanus_group-label')"/>
+			<select1 ref="/data/tetanus_group/tetanus_1">
+				<label ref="jr:itext('tetanus_1-label')"/>
+				<item>
+					<label ref="jr:itext('tetanus_1-yes-label')"/>
+					<value>yes</value>
+				</item>
+				<item>
+					<label ref="jr:itext('tetanus_1-no-label')"/>
+					<value>no</value>
+				</item>
+			</select1>
+			<select1 ref="/data/tetanus_group/tetanus_2">
+				<label ref="jr:itext('tetanus_2-label')"/>
+				<item>
+					<label ref="jr:itext('tetanus_2-yes-label')"/>
+					<value>yes</value>
+				</item>
+				<item>
+					<label ref="jr:itext('tetanus_2-no-label')"/>
+					<value>no</value>
+				</item>
+			</select1>
+		</group>
+		<select1 ref="/data/update_edd">
+			<label ref="jr:itext('update_edd-label')"/>
+			<item>
+				<label ref="jr:itext('update_edd-yes-label')"/>
+				<value>yes</value>
+			</item>
+			<item>
+				<label ref="jr:itext('update_edd-no-label')"/>
+				<value>no</value>
+			</item>
+		</select1>
+		<input ref="/data/new_edd">
+			<label ref="jr:itext('new_edd-label')"/>
+		</input>
+	</h:body>
+</h:html>

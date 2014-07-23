@@ -1,0 +1,68 @@
+<profile version="44" update="https://www.commcarehq.org/a/corpora/apps/download/6c92c18603ce0e9a374ae708fedcdb5b/profile.xml?latest=true" requiredMajor="2" requiredMinor="2">
+    <property key="BackupMode" value="file_mode"/>
+    <property key="backup-url" value="file:///E:/CommCare.Backup"/>
+    <property key="restore-url" value="file:///E:/CommCare.Backup"/>
+    <property key="ota-restore-url" value="https://www.commcarehq.org/a/corpora/phone/restore/"/>
+    <property key="ota-restore-url-testing" value="https://www.commcarehq.org/a/corpora/phone/restore/"/>
+    <property key="PostURL" value="https://www.commcarehq.org/a/corpora/receiver/26d1fa1d3e839e53a83d7ac22b8e4b18/" force="true"/>
+    <property key="PostTestURL" value="https://www.commcarehq.org/a/corpora/receiver/26d1fa1d3e839e53a83d7ac22b8e4b18/" force="true"/>
+    <property key="cur_locale" value="en"/>
+    <property key="cc_user_domain" value="corpora.commcarehq.org"/>
+    <property key="jr_openrosa_api" value="1.0"/>
+
+    <!-- Properties configured on CommCare HQ 1.0 -->
+    
+        <property key="cc-send-procedure" value="cc-send-http" />
+    
+        <property key="logenabled" value="Enabled" />
+    
+        <property key="log_prop_daily" value="log_never" />
+    
+        <property key="cc-autoup-freq" value="freq-never" />
+    
+        <property key="log_prop_weekly" value="log_short" />
+    
+        <property key="cur_locale" value="default" />
+    
+        <property key="ViewStyle" value="v_chatterbox" />
+    
+        <property key="loose_media" value="no" />
+    
+        <property key="restore-tolerance" value="loose" />
+    
+        <property key="purge-freq" value="0" />
+    
+        <property key="server-tether" value="push-only" />
+    
+        <property key="password_format" value="n" />
+    
+        <property key="cc-user-mode" value="cc-u-normal" />
+    
+        <property key="user_reg_server" value="required" />
+    
+        <property key="cc-review-days" value="7" />
+    
+
+    <!-- end -->
+
+    <features>
+        <checkoff active="false"/>
+        <reminders active="false">
+            <time>0</time>
+        </reminders>
+        <package active="false"/>
+        
+            <sense active="true" />
+        
+        <users active="true">
+            
+        </users>
+    </features>
+
+    <suite><resource id="suite" version="44">
+        
+        <location authority="local">jr://resource/suite.xml</location>
+        
+        <location authority="remote">https://www.commcarehq.org/a/corpora/apps/download/6c92c18603ce0e9a374ae708fedcdb5b/suite.xml</location>
+    </resource></suite>
+</profile>

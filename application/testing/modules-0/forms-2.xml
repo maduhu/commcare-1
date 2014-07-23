@@ -1,0 +1,135 @@
+<h:html xmlns:h="http://www.w3.org/1999/xhtml" xmlns:orx="http://openrosa.org/jr/xforms" xmlns="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://openrosa.org/javarosa">
+	<h:head>
+		<h:title>Delivery</h:title>
+		<model>
+			<instance>
+				<data xmlns:jrm="http://dev.commcarehq.org/jr/xforms" xmlns="http://openrosa.org/formdesigner/586D721B-5697-4042-8823-B1458551129F" uiVersion="1" version="51" name="Delivery">
+					<mother_deliver/>
+					<delivery_information>
+						<delivery_date/>
+						<delivery_type/>
+						<num_children>1</num_children>
+						<child_questions jr:template="">
+							<gender/>
+							<birth_weight/>
+						</child_questions>
+						<picture_of_child/>
+					</delivery_information>
+				<case xmlns="http://commcarehq.org/case/transaction/v2" case_id="" user_id="" date_modified=""><update><delivery_date/></update><close/></case><orx:meta xmlns:cc="http://commcarehq.org/xforms"><orx:deviceID/><orx:timeStart/><orx:timeEnd/><orx:username/><orx:userID/><orx:instanceID/><cc:appVersion/></orx:meta></data>
+			</instance>
+			<instance src="jr://instance/session" id="commcaresession"/><bind nodeset="/data/mother_deliver" required="true()"/>
+			<bind nodeset="/data/delivery_information" relevant="/data/mother_deliver = 'yes'"/>
+			<bind nodeset="/data/delivery_information/delivery_date" type="xsd:date" constraint=". &gt;= today()"/>
+			<bind nodeset="/data/delivery_information/delivery_type"/>
+			<bind nodeset="/data/delivery_information/num_children" type="xsd:int" constraint=". &gt;= 0" required="true()"/>
+			<bind nodeset="/data/delivery_information/child_questions"/>
+			<bind nodeset="/data/delivery_information/child_questions/gender"/>
+			<bind nodeset="/data/delivery_information/child_questions/birth_weight" type="xsd:double"/>
+			<bind nodeset="/data/delivery_information/picture_of_child" type="binary"/>
+			<itext>
+				<translation lang="en" default="">
+					<text id="mother_deliver-label">
+						<value>Did the Mother Deliver?</value>
+					</text>
+					<text id="mother_deliver-yes-label">
+						<value>Yes</value>
+					</text>
+					<text id="mother_deliver-no-label">
+						<value>No</value>
+					</text>
+					<text id="delivery_information-label">
+						<value>Delivery Information</value>
+					</text>
+					<text id="delivery_date-label">
+						<value>Delivery Date</value>
+					</text>
+					<text id="delivery_type-label">
+						<value>Type of Delivery</value>
+					</text>
+					<text id="delivery_type-caesarian-label">
+						<value>Caesarian</value>
+					</text>
+					<text id="delivery_type-vaginal-label">
+						<value>Vaginal</value>
+					</text>
+					<text id="num_children-label">
+						<value>Number of Children?</value>
+					</text>
+					<text id="child_questions-label">
+						<value>Child Questions</value>
+					</text>
+					<text id="gender-label">
+						<value>Gender</value>
+					</text>
+					<text id="question9-male-label">
+						<value>Male</value>
+					</text>
+					<text id="question9-female-label">
+						<value>Female</value>
+					</text>
+					<text id="birth_weight-label">
+						<value>Birth Weight</value>
+					</text>
+					<text id="picture_of_child-label">
+						<value>Picture of Child</value>
+					</text>
+				</translation>
+			</itext>
+		<bind nodeset="/data/case/@date_modified" type="dateTime" calculate="/data/meta/timeEnd"/><bind nodeset="/data/case/@user_id" calculate="/data/meta/userID"/><bind nodeset="/data/case/@case_id" calculate="instance('commcaresession')/session/data/case_id"/><bind nodeset="/data/case/update/delivery_date" relevant="count(/data/delivery_information/delivery_date) &gt; 0" calculate="/data/delivery_information/delivery_date"/><bind nodeset="/data/case/close" relevant="/data/mother_deliver = 'yes'"/><setvalue ref="/data/meta/deviceID" event="xforms-ready" value="instance('commcaresession')/session/context/deviceid"/><setvalue ref="/data/meta/timeStart" event="xforms-ready" value="now()"/><bind nodeset="/data/meta/timeStart" type="xsd:dateTime"/><setvalue ref="/data/meta/timeEnd" event="xforms-revalidate" value="now()"/><bind nodeset="/data/meta/timeEnd" type="xsd:dateTime"/><setvalue ref="/data/meta/username" event="xforms-ready" value="instance('commcaresession')/session/context/username"/><setvalue ref="/data/meta/userID" event="xforms-ready" value="instance('commcaresession')/session/context/userid"/><setvalue ref="/data/meta/instanceID" event="xforms-ready" value="uuid()"/><setvalue ref="/data/meta/appVersion" event="xforms-ready" value="instance('commcaresession')/session/context/appversion"/></model>
+	</h:head>
+	<h:body>
+		<select1 ref="/data/mother_deliver">
+			<label ref="jr:itext('mother_deliver-label')"/>
+			<item>
+				<label ref="jr:itext('mother_deliver-yes-label')"/>
+				<value>yes</value>
+			</item>
+			<item>
+				<label ref="jr:itext('mother_deliver-no-label')"/>
+				<value>no</value>
+			</item>
+		</select1>
+		<group ref="/data/delivery_information">
+			<label ref="jr:itext('delivery_information-label')"/>
+			<input ref="/data/delivery_information/delivery_date">
+				<label ref="jr:itext('delivery_date-label')"/>
+			</input>
+			<select1 ref="/data/delivery_information/delivery_type">
+				<label ref="jr:itext('delivery_type-label')"/>
+				<item>
+					<label ref="jr:itext('delivery_type-caesarian-label')"/>
+					<value>caesarian</value>
+				</item>
+				<item>
+					<label ref="jr:itext('delivery_type-vaginal-label')"/>
+					<value>vaginal</value>
+				</item>
+			</select1>
+			<input ref="/data/delivery_information/num_children">
+				<label ref="jr:itext('num_children-label')"/>
+			</input>
+			<group>
+				<label ref="jr:itext('child_questions-label')"/>
+				<repeat nodeset="/data/delivery_information/child_questions" jr:count="/data/num_children">
+					<select1 ref="/data/delivery_information/child_questions/gender">
+						<label ref="jr:itext('gender-label')"/>
+						<item>
+							<label ref="jr:itext('question9-male-label')"/>
+							<value>male</value>
+						</item>
+						<item>
+							<label ref="jr:itext('question9-female-label')"/>
+							<value>female</value>
+						</item>
+					</select1>
+					<input ref="/data/delivery_information/child_questions/birth_weight">
+						<label ref="jr:itext('birth_weight-label')"/>
+					</input>
+				</repeat>
+			</group>
+			<upload ref="/data/delivery_information/picture_of_child" mediatype="image/*">
+				<label ref="jr:itext('picture_of_child-label')"/>
+			</upload>
+		</group>
+	</h:body>
+</h:html>

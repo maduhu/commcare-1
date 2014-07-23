@@ -1,0 +1,49 @@
+<h:html xmlns:h="http://www.w3.org/1999/xhtml" xmlns:orx="http://openrosa.org/jr/xforms" xmlns="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://openrosa.org/javarosa">
+	<h:head>
+		<h:title>Constraints</h:title>
+		<model>
+			<instance>
+				<data xmlns:jrm="http://dev.commcarehq.org/jr/xforms" xmlns="http://openrosa.org/formdesigner/AE3BF1D2-D88A-4321-AA44-38D27DB4956D" uiVersion="1" version="179" name="Constraints">
+					<question2/>
+					<text_value/>
+					<text_length/>
+					<required/>
+				<orx:meta xmlns:cc="http://commcarehq.org/xforms"><orx:deviceID/><orx:timeStart/><orx:timeEnd/><orx:username/><orx:userID/><orx:instanceID/><cc:appVersion/></orx:meta></data>
+			</instance>
+			<instance src="jr://instance/session" id="commcaresession"/><bind nodeset="/data/question2"/>
+			<bind nodeset="/data/text_value" type="xsd:string" constraint=". != 'WRONG'"/>
+			<bind nodeset="/data/text_length" type="xsd:string" constraint="string-length(.) &gt;= 3 and string-length(.) &lt; 7"/>
+			<bind nodeset="/data/required" type="xsd:string"/>
+			<itext>
+				<translation lang="en" default="">
+					<text id="question2-label">
+						<value>This form will test different logic constraints. Please try all of the combinations of inputs for each question.</value>
+					</text>
+					<text id="text_value-label">
+						<value>This question can be anything but WRONG</value>
+					</text>
+					<text id="text_length-label">
+						<value>This question cannot be less than 3 characters, or greater than 6 characters long</value>
+					</text>
+					<text id="required-label">
+						<value>This question is required. Try to navigate to the next question and ensure that you are notified that it must be answered.</value>
+					</text>
+				</translation>
+			</itext>
+		<setvalue ref="/data/meta/deviceID" event="xforms-ready" value="instance('commcaresession')/session/context/deviceid"/><setvalue ref="/data/meta/timeStart" event="xforms-ready" value="now()"/><bind nodeset="/data/meta/timeStart" type="xsd:dateTime"/><setvalue ref="/data/meta/timeEnd" event="xforms-revalidate" value="now()"/><bind nodeset="/data/meta/timeEnd" type="xsd:dateTime"/><setvalue ref="/data/meta/username" event="xforms-ready" value="instance('commcaresession')/session/context/username"/><setvalue ref="/data/meta/userID" event="xforms-ready" value="instance('commcaresession')/session/context/userid"/><setvalue ref="/data/meta/instanceID" event="xforms-ready" value="uuid()"/><setvalue ref="/data/meta/appVersion" event="xforms-ready" value="instance('commcaresession')/session/context/appversion"/></model>
+	</h:head>
+	<h:body>
+		<trigger ref="/data/question2">
+			<label ref="jr:itext('question2-label')"/>
+		</trigger>
+		<input ref="/data/text_value">
+			<label ref="jr:itext('text_value-label')"/>
+		</input>
+		<input ref="/data/text_length">
+			<label ref="jr:itext('text_length-label')"/>
+		</input>
+		<input ref="/data/required">
+			<label ref="jr:itext('required-label')"/>
+		</input>
+	</h:body>
+</h:html>

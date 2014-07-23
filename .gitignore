@@ -14,6 +14,28 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 
+
+backend/bin/
+application/bin/
+application/build
+util/bin
+application/dist
+application/lib
+application/.polishSettings
+application/tools
+backend/dist/*
+key.properties
+glob:application/custom-devices.xml
+cases/bin/
+application/corpora/*
+application/cover/*
+application/cover/*
+application/coverage/image/data/three-three_three.png
+*/application/coverage/*
+application/src/org/commcare/restore/CommCareOTARestoreController.java.orig
+application/weblib*/*
+
+
 # =========================
 # Operating System Files
 # =========================
